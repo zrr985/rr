@@ -5,8 +5,11 @@ from rknnpool import rknnPoolExecutor
 from func import myFunc
 
 cap = cv2.VideoCapture('./720p60hz.mp4')
-# cap = cv2.VideoCapture(0)
-modelPath = "./rknnModel/yolov5s_relu_tk2_RK3588_i8.rknn"
+#cap = cv2.VideoCapture(0)
+#cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+#cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+
+modelPath = "./rknnModel/yolov8s.rknn"
 # 线程数, 增大可提高帧率
 TPEs = 3
 # 初始化rknn池
@@ -31,11 +34,13 @@ while (cap.isOpened()):
     ret, frame = cap.read()
     if not ret:
         break
+    #print(frame.shape)
     pool.put(frame)
     frame, flag = pool.get()
     if flag == False:
         break
-    cv2.imshow('test', frame)
+    #print(frame.shape)
+    cv2.imshow('yolov8', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     if frames % 30 == 0:
