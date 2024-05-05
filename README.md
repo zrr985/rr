@@ -2,14 +2,6 @@
 我们在https://github.com/leafqycc/rknn-multi-threaded的基础上，对rknn_model_zoo中的yolov8 example进行了整合，用github copilot重写了后处理函数，取消了pytorch依赖。
 
 
-#### Get model optimized for RKNN
-
-Exports detection/segment model with optimization for RKNN, please refer here [RKOPT_README.md](RKOPT_README.md). Optimization for exporting model does not affect the training stage
-
-关于如何导出适配 RKNPU 分割/检测 模型，请参考 [RKOPT_README.zh-CN.md](RKOPT_README.zh-CN.md)，该优化只在导出模型时生效，训练代码按照原仓库的指引即可。
-
----
-
 # 简介
 * 使用多线程异步操作rknn模型, 提高rk3588/rk3588s的NPU使用率, 进而提高推理帧数(rk3568之类修改后应该也能使用, 但是作者本人并没有rk3568开发板......)
 * 此分支使用模型[yolov5s_relu_tk2_RK3588_i8.rknn](https://github.com/airockchip/rknn_model_zoo), 将yolov5s模型的激活函数silu修改为为relu,在损失一点精度的情况下获得较大性能提升,详情见于[rknn_model_zoo](https://github.com/airockchip/rknn_model_zoo/tree/main/models/CV/object_detection/yolo)
