@@ -1,4 +1,7 @@
 
+我们在https://github.com/leafqycc/rknn-multi-threaded的基础上，对rknn_model_zoo中的yolov8 example进行了整合，用github copilot重写了后处理函数，取消了pytorch依赖。
+
+
 #### Get model optimized for RKNN
 
 Exports detection/segment model with optimization for RKNN, please refer here [RKOPT_README.md](RKOPT_README.md). Optimization for exporting model does not affect the training stage
