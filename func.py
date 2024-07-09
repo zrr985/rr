@@ -169,9 +169,14 @@ def yolov8_post_process(input_data):
 
     return boxes, classes, scores
 
-def draw(image, boxes, scores, classes):
+def draw(image, boxes, scores, classes, ratio, padding):
     for box, score, cl in zip(boxes, scores, classes):
         top, left, right, bottom = box
+        
+        top = (top - padding[0])/ratio[0]
+        left = (left - padding[1])/ratio[1]
+        right = (right - padding[0])/ratio[0]
+        bottom = (bottom - padding[1])/ratio[1]
         # print('class: {}, score: {}'.format(CLASSES[cl], score))
         # print('box coordinate left,top,right,down: [{}, {}, {}, {}]'.format(top, left, right, bottom))
         top = int(top)
@@ -204,16 +209,16 @@ def letterbox(im, new_shape=(640, 640), color=(0, 0, 0)):
     left, right = int(round(dw - 0.1)), int(round(dw + 0.1))
     im = cv2.copyMakeBorder(im, top, bottom, left, right,
                             cv2.BORDER_CONSTANT, value=color)  # add border
-    return im
-    # return im, ratio, (dw, dh)
+    #return im
+    return im, ratio, (left, top)
 
 def myFunc(rknn_lite, IMG):
-    IMG = cv2.cvtColor(IMG, cv2.COLOR_BGR2RGB)
+    IMG2 = cv2.cvtColor(IMG, cv2.COLOR_BGR2RGB)
     # 等比例缩放
-    IMG = letterbox(IMG)
+    IMG2, ratio, padding = letterbox(IMG2)
     # 强制放缩
-    # IMG = cv2.resize(IMG, (IMG_SIZE, IMG_SIZE))
-    IMG2 = np.expand_dims(IMG, 0)
+    # IMG2 = cv2.resize(IMG, (IMG_SIZE, IMG_SIZE))
+    IMG2 = np.expand_dims(IMG2, 0)
     
     outputs = rknn_lite.inference(inputs=[IMG2],data_format=['nhwc'])
 
@@ -222,7 +227,6 @@ def myFunc(rknn_lite, IMG):
 
     boxes, classes, scores = yolov8_post_process(outputs)
 
-    IMG = cv2.cvtColor(IMG, cv2.COLOR_RGB2BGR)
     if boxes is not None:
-        draw(IMG, boxes, scores, classes)
+        draw(IMG, boxes, scores, classes, ratio, padding)
     return IMG
