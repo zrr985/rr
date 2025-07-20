@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++11 -rdynamic CMakeFiles/gcd_demo.dir/src/gcd.cpp.o CMakeFiles/gcd_demo.dir/src/main.cpp.o -o gcd_demo 

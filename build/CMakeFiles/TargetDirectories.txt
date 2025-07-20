@@ -1,0 +1,3 @@
+/home/zrr/桌面/zrr/build/CMakeFiles/gcd_demo.dir
+/home/zrr/桌面/zrr/build/CMakeFiles/edit_cache.dir
+/home/zrr/桌面/zrr/build/CMakeFiles/rebuild_cache.dir
