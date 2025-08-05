@@ -253,8 +253,18 @@ class SmokeDetector:
             class_real = None  # 窗口未满，返回不确定
             
         # 绘制检测结果
-        if boxes is not None:
-            draw(img, boxes, scores, classes, ratio, padding)
+         # 修改绘制调用：只传递 smoking 类别的检测结果
+        if boxes is not None and classes is not None:
+            # 创建 smoking 类别的掩码
+            smoking_mask = (classes == 2)
+            smoking_boxes = boxes[smoking_mask]
+            smoking_classes = classes[smoking_mask]
+            smoking_scores = scores[smoking_mask] if scores is not None else None
+            
+            # 只绘制 smoking 类别
+            draw(img, smoking_boxes, smoking_scores, smoking_classes, ratio, padding)
+            
+        return img, class_real
             
         # 在图像上显示检测状态
         #status_text = f"Face: {has_face}, Cigarette: {has_cigarette}, Smoking: {has_smoking}"
