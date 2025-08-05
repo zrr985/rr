@@ -408,7 +408,7 @@ def smoke_detection_task(frame_queue, display_queue, stop_event):
             if class_smoke == 1:
                 abnormal_count += 1
                 if abnormal_count >= 20 and not abnormal_pushed:
-                    print(f"检测到吸烟10帧，准备推送数据: task_code=5, state=1")
+                    print(f"检测到吸烟20帧，准备推送数据: task_code=5, state=1")
                     try:
                         send_abnormal_data(5, 1)
                         print("吸烟异常数据推送成功")
